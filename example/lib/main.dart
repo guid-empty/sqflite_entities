@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:how_to_use_sqlite_adapters/models/image_entity.dart';
 import 'package:how_to_use_sqlite_adapters/models/profile_entity.dart';
+import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_engine.dart';
 import 'package:sqflite_entities/sqflite_entities.dart';
 
@@ -21,6 +22,26 @@ Future<void> main() async {
 
   final images = await storage.retrieveCollection<ImageEntity>();
   print(images.length);
+
+  final retrieved = await storage.queryEntities<ImageEntity>(
+    where: '${ImageEntitySqlAdapter.columns.id} = ? '
+        ' AND ${ImageEntitySqlAdapter.columns.isDeleted} = ?',
+    whereArgs: [
+      33,
+      SqliteCodec.boolEncode(false),
+    ],
+  );
+  print(retrieved.length);
+
+  await storage.storeEntity(
+    ProfileEntity(
+      firstName: 'A',
+      lastName: 'B',
+    ),
+  );
+
+  final profiles = await storage.retrieveCollection<ProfileEntity>();
+  print(profiles.length);
 
   runApp(const MyApp());
 }

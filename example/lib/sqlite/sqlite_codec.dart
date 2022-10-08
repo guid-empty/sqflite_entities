@@ -1,8 +1,12 @@
 import 'dart:convert';
 
-abstract class SqfliteCodec {
+abstract class SqliteCodec {
+  static bool boolDecode(int value) => value > 0;
+
   static bool boolDecodeNullable(int? value) =>
       (value != null) ? value > 0 : false;
+
+  static int boolEncode(bool value) => (value ? 1 : 0);
 
   static int? boolEncodeNullable(bool? value) =>
       (value != null) ? (value ? 1 : 0) : null;
