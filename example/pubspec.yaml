@@ -13,7 +13,10 @@ dependencies:
     sdk: flutter
 
   sqflite_entities_annotations:
-    path: ./../../sqflite_entities_annotations
+    git:
+      ref: master
+      url: git@github.com:guid-empty/sqflite_entities_annotations.git
+
 
   sqflite_entities:
     path: ./../

@@ -1,4 +1,4 @@
-import 'package:sqflite_entities/sqflite_entities.dart';
+import 'package:sqflite_entities/src/sql_adapter.dart';
 import 'package:sqflite_entities_annotations/sqflite_entities_annotations.dart';
 
 part 'profile_entity.sql.g.dart';

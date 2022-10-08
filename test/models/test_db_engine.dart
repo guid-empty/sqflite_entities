@@ -1,4 +1,4 @@
-import 'package:sqflite_entities/sqflite_entities.dart';
+import 'package:sqflite_entities/src/sqlite_engine.dart';
 
 class TestDBEngine extends SqliteEngine {
   @override
