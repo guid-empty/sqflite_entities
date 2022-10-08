@@ -14,12 +14,14 @@ ImageEntity _$ImageEntityFromSqlDataMap(Map<String, dynamic> rawData) {
   return ImageEntity(
     id: rawData['id'] as int,
     createdAt: SqfliteCodec.dateTimeDecode(rawData['created_at'] as int),
-    uploadedAt: SqfliteCodec.dateTimeDecode(rawData['uploaded_at'] as int?),
+    uploadedAt:
+        SqfliteCodec.dateTimeDecodeNullable(rawData['uploaded_at'] as int?),
     fileSizeBytes: rawData['file_size_bytes'] as int?,
-    isFileUploaded: SqfliteCodec.boolDecode(rawData['is_file_uploaded'] as int),
+    isFileUploaded:
+        SqfliteCodec.boolDecodeNullable(rawData['is_file_uploaded'] as int),
     width: rawData['width'] as int,
     height: rawData['height'] as int,
-    isDeleted: SqfliteCodec.boolDecode(rawData['is_deleted'] as int),
+    isDeleted: SqfliteCodec.boolDecodeNullable(rawData['is_deleted'] as int),
   );
 }
 
@@ -29,14 +31,14 @@ ImageEntity _$ImageEntityFromSqlDataMap(Map<String, dynamic> rawData) {
 Map<String, dynamic> _$ImageEntityToSqlDataMap(ImageEntity instance) {
   final val = <String, dynamic>{};
   val['id'] = instance.id;
-  val['created_at'] = SqfliteCodec.dateTimeEncode(instance.createdAt) as int;
-  val['uploaded_at'] = SqfliteCodec.dateTimeEncode(instance.uploadedAt);
+  val['created_at'] = SqfliteCodec.dateTimeEncode(instance.createdAt);
+  val['uploaded_at'] = SqfliteCodec.dateTimeEncodeNullable(instance.uploadedAt);
   val['file_size_bytes'] = instance.fileSizeBytes;
   val['is_file_uploaded'] =
-      SqfliteCodec.boolEncode(instance.isFileUploaded) as int;
+      SqfliteCodec.boolEncodeNullable(instance.isFileUploaded);
   val['width'] = instance.width;
   val['height'] = instance.height;
-  val['is_deleted'] = SqfliteCodec.boolEncode(instance.isDeleted) as int;
+  val['is_deleted'] = SqfliteCodec.boolEncodeNullable(instance.isDeleted);
   return val;
 }
 

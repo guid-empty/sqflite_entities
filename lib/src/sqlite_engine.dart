@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_entities/src/sql_adapter.dart';
 
 typedef DatabaseFilePathFactory = String Function();
-typedef DbMigration = Future<void> Function(Database);
+typedef DatabaseMigration = Future<void> Function(Database);
 
 abstract class SqfliteEngine {
   final List<SqlAdapter<Object>> _adapters = [];
@@ -30,7 +30,7 @@ abstract class SqfliteEngine {
 
   int get dbVersion;
 
-  Map<int, DbMigration> get migrations;
+  Map<int, DatabaseMigration> get migrations;
 
   Future<T> beginTransaction<T>(
     Future<T> Function(Transaction txn) action, {

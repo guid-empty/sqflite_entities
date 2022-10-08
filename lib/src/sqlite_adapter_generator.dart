@@ -208,15 +208,8 @@ class SqfliteAdapterGenerator
 
     for (final fd in fieldDescriptors) {
       if (fd.encoder != null) {
-        final dartFieldType = _getDartTypeForSqlFieldType(
-          isNullable: fd.isNullable,
-          fieldType: fd.sqlFieldType,
-        );
-
-        final castExpression = !fd.isNullable ? ' as $dartFieldType ' : '';
-
         buffer.write(
-            '\t\tval[\'${fd.sqlFieldName}\'] = ${fd.encoder}(instance.${fd.dartModelPropertyName}) $castExpression ;\n');
+            '\t\tval[\'${fd.sqlFieldName}\'] = ${fd.encoder}(instance.${fd.dartModelPropertyName});\n');
       } else {
         buffer.write(
             '\t\tval[\'${fd.sqlFieldName}\'] = instance.${fd.dartModelPropertyName};\n');

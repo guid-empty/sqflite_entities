@@ -24,8 +24,8 @@ class ImageEntity {
   @SqlField(
     fieldName: 'uploaded_at',
     fieldType: SqlFieldType.integer,
-    toRawData: SqfliteCodec.dateTimeEncode,
-    fromRawData: SqfliteCodec.dateTimeDecode,
+    toRawData: SqfliteCodec.dateTimeEncodeNullable,
+    fromRawData: SqfliteCodec.dateTimeDecodeNullable,
   )
   final DateTime? uploadedAt;
 
@@ -38,8 +38,8 @@ class ImageEntity {
   @SqlField(
     fieldName: 'is_file_uploaded',
     fieldType: SqlFieldType.integer,
-    toRawData: SqfliteCodec.boolEncode,
-    fromRawData: SqfliteCodec.boolDecode,
+    toRawData: SqfliteCodec.boolEncodeNullable,
+    fromRawData: SqfliteCodec.boolDecodeNullable,
   )
   final bool isFileUploaded;
 
@@ -58,8 +58,8 @@ class ImageEntity {
   @SqlField(
     fieldName: 'is_deleted',
     fieldType: SqlFieldType.integer,
-    toRawData: SqfliteCodec.boolEncode,
-    fromRawData: SqfliteCodec.boolDecode,
+    toRawData: SqfliteCodec.boolEncodeNullable,
+    fromRawData: SqfliteCodec.boolDecodeNullable,
   )
   final bool isDeleted;
 
