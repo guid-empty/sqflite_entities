@@ -7,26 +7,29 @@ import 'package:sqflite_entities/src/sql_adapter.dart';
 typedef DatabaseFilePathFactory = String Function();
 typedef DatabaseMigration = Future<void> Function(Database);
 
-abstract class SqfliteEngine {
-  final List<SqlAdapter<Object>> _adapters = [];
+///
+/// Базовый класс для работы с локальным хранилищем данных на основе Sqlite;
+///
+/// How to know current version of sqlite -
+/// https://github.com/tekartik/sqflite/blob/master/sqflite/doc/version.md
+///
+/// See more details about the process with working with sqlite engine in
+/// https://www.notion.so/97174a6df21d46338022752d02d0c402
+///
+abstract class SqliteEngine {
+  final List<SqlAdapter> _adapters = [];
 
-  Database _database;
+  Database? _database;
 
   final ConflictAlgorithm _conflictAlgorithm;
 
-  Map<Type, SqlAdapter> _adaptersMap;
+  late final Map<Type, SqlAdapter> _adaptersMap;
 
-  String _databaseIdentity;
+  late final String _databaseIdentity;
 
-  SqfliteEngine({
-    required Database database,
-    required String databaseIdentity,
+  SqliteEngine({
     ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.replace,
-    Map<Type, SqlAdapter> adaptersMap = const {},
-  })  : _conflictAlgorithm = conflictAlgorithm,
-        _adaptersMap = adaptersMap,
-        _database = database,
-        _databaseIdentity = databaseIdentity;
+  }) : _conflictAlgorithm = conflictAlgorithm;
 
   int get dbVersion;
 
@@ -36,13 +39,13 @@ abstract class SqfliteEngine {
     Future<T> Function(Transaction txn) action, {
     bool? exclusive,
   }) =>
-      _database.transaction(action, exclusive: exclusive);
+      _database!.transaction(action, exclusive: exclusive);
 
   Future<void> clearEntities<T>({
     Transaction? transaction,
   }) {
     final adapter = _adaptersMap[T]!;
-    return (transaction ?? _database).delete(adapter.tableName);
+    return (transaction ?? _database)!.delete(adapter.tableName);
   }
 
   Future<void> deleteEntity<T>({
@@ -51,14 +54,14 @@ abstract class SqfliteEngine {
     Transaction? transaction,
   }) {
     final adapter = _adaptersMap[T]!;
-    return (transaction ?? _database).delete(
+    return (transaction ?? _database)!.delete(
       adapter.tableName,
       where: where,
       whereArgs: whereArgs,
     );
   }
 
-  Future<SqfliteEngine> initialize({
+  Future<SqliteEngine> initialize({
     required String databaseIdentity,
     DatabaseFilePathFactory? filePathFactory,
   }) async {
@@ -75,7 +78,7 @@ abstract class SqfliteEngine {
             'sqlite_data_$databaseIdentity.db',
           );
 
-    await _database.close();
+    await _database?.close();
     _database = await openDatabase(
       path,
       onCreate: (db, version) {
@@ -85,8 +88,10 @@ abstract class SqfliteEngine {
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         for (var i = oldVersion + 1; i <= newVersion; i++) {
-          final migration = migrations[i]!;
-          await migration(db);
+          final migration = migrations[i];
+          if (migration != null) {
+            await migration(db);
+          }
         }
       },
       version: dbVersion,
@@ -98,14 +103,16 @@ abstract class SqfliteEngine {
   Future<List<T>> queryEntities<T>({
     required String where,
     List<dynamic>? whereArgs,
+    String? orderBy,
     int? limit,
     Transaction? transaction,
   }) async {
     final adapter = _adaptersMap[T]!;
-    final serializedStates = await (transaction ?? _database).query(
+    final serializedStates = await (transaction ?? _database)!.query(
       adapter.tableName,
       where: where,
       whereArgs: whereArgs,
+      orderBy: orderBy,
       limit: limit,
     );
 
@@ -117,7 +124,7 @@ abstract class SqfliteEngine {
     return entities.toList();
   }
 
-  void registryAdapters(Iterable<SqlAdapter<Object>> adapters) {
+  void registryAdapters(Iterable<SqlAdapter> adapters) {
     _adapters.addAll(adapters);
     _adaptersMap = {
       for (var adapter in _adapters) (adapter).modelType: adapter
@@ -129,7 +136,7 @@ abstract class SqfliteEngine {
   }) async {
     final adapter = _adaptersMap[T]!;
     final serializedStates =
-        await (transaction ?? _database).query(adapter.tableName);
+        await (transaction ?? _database)!.query(adapter.tableName);
 
     final entities = serializedStates.map((state) {
       final entity = adapter.deserialize(state) as T;
@@ -145,7 +152,7 @@ abstract class SqfliteEngine {
     final adapter = _adaptersMap[T]!;
 
     final maps =
-        await (transaction ?? _database).query(adapter.tableName, limit: 1);
+        await (transaction ?? _database)!.query(adapter.tableName, limit: 1);
 
     if (maps.isEmpty) {
       return null;
@@ -177,7 +184,7 @@ abstract class SqfliteEngine {
     final adapter = _adaptersMap[T]!;
     final rawData = adapter.serialize(entity);
 
-    return (transaction ?? _database).insert(
+    return (transaction ?? _database)!.insert(
       adapter.tableName,
       rawData,
       conflictAlgorithm: _conflictAlgorithm,
@@ -188,12 +195,18 @@ abstract class SqfliteEngine {
     T entity, {
     required String where,
     required List<dynamic> whereArgs,
+    List<String>? columnsOnly,
     Transaction? transaction,
   }) {
     final adapter = _adaptersMap[T]!;
     final rawData = adapter.serialize(entity);
 
-    return (transaction ?? _database).update(
+    if (columnsOnly != null && columnsOnly.isNotEmpty) {
+      rawData.removeWhere(
+          (columnName, value) => !columnsOnly.contains(columnName));
+    }
+
+    return (transaction ?? _database)!.update(
       adapter.tableName,
       rawData,
       conflictAlgorithm: _conflictAlgorithm,
