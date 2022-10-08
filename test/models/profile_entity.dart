@@ -19,41 +19,25 @@ part 'profile_entity.sql.g.dart';
   ],
 )
 class ProfileEntity {
-  @SqlField(
-    fieldName: 'first_name',
-    fieldType: SqlFieldType.text,
-  )
+  @SqlField(fieldName: 'first_name')
   final String firstName;
 
-  @SqlField(
-    fieldName: 'last_name',
-    fieldType: SqlFieldType.text,
-  )
+  @SqlField(fieldName: 'last_name')
   final String lastName;
 
-  @SqlField(
-    fieldName: 'position',
-    fieldType: SqlFieldType.text,
-  )
+  @SqlField(fieldName: 'position')
   final String? position;
 
   @SqlField(
-    fieldName: 'profile',
-    fieldType: SqlFieldType.text,
+    fieldName: 'age',
+    fieldType: SqlFieldType.integer,
   )
-  final String? profile;
-
-  @SqlField(
-    fieldName: 'team_name',
-    fieldType: SqlFieldType.text,
-  )
-  final String? teamName;
+  final int age;
 
   ProfileEntity({
     required this.firstName,
     required this.lastName,
+    required this.age,
     this.position,
-    this.profile,
-    this.teamName,
   });
 }

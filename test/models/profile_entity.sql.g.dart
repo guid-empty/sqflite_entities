@@ -15,8 +15,7 @@ ProfileEntity _$ProfileEntityFromSqlDataMap(Map<String, dynamic> rawData) {
     firstName: rawData['first_name'] as String,
     lastName: rawData['last_name'] as String,
     position: rawData['position'] as String?,
-    profile: rawData['profile'] as String?,
-    teamName: rawData['team_name'] as String?,
+    age: rawData['age'] as int,
   );
 }
 
@@ -28,8 +27,7 @@ Map<String, dynamic> _$ProfileEntityToSqlDataMap(ProfileEntity instance) {
   val['first_name'] = instance.firstName;
   val['last_name'] = instance.lastName;
   val['position'] = instance.position;
-  val['profile'] = instance.profile;
-  val['team_name'] = instance.teamName;
+  val['age'] = instance.age;
   return val;
 }
 
@@ -42,8 +40,7 @@ class ProfileEntityColumnsDeclaration {
   final String firstName = 'first_name';
   final String lastName = 'last_name';
   final String position = 'position';
-  final String profile = 'profile';
-  final String teamName = 'team_name';
+  final String age = 'age';
   final String id = 'id';
   final String created = 'created';
 }
@@ -78,8 +75,7 @@ CREATE TABLE profile(
 		first_name TEXT NOT NULL ,
 		last_name TEXT NOT NULL ,
 		position TEXT,
-		profile TEXT,
-		team_name TEXT,
+		age INTEGER NOT NULL ,
 		id INTEGER PRIMARY KEY AUTOINCREMENT ,
 		created INTEGER NOT NULL  DEFAULT (DATETIME('now')))
       ''';

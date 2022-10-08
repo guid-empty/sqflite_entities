@@ -1,6 +1,6 @@
 import 'package:sqflite_entities/sqflite_entities.dart';
 
-class ApplicationDBStorage extends SqliteEngine {
+class ApplicationDBEngine extends SqliteEngine {
   @override
   int get dbVersion => 3;
 
