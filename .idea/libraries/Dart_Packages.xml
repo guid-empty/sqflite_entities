@@ -644,7 +644,6 @@
           <value>
             <list>
               <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/lib" />
-              <option value="$PROJECT_DIR$/../sqflite_entities_annotations/lib" />
             </list>
           </value>
         </entry>
@@ -974,7 +973,6 @@
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/flutter_driver/lib" />
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/fuchsia_remote_debug_protocol/lib" />
-      <root url="file://$PROJECT_DIR$/../sqflite_entities_annotations/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -383,9 +383,11 @@ packages:
   sqflite_entities_annotations:
     dependency: "direct main"
     description:
-      path: "../../sqflite_entities_annotations"
-      relative: true
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: "0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474"
+      url: "git@github.com:guid-empty/sqflite_entities_annotations.git"
+    source: git
     version: "0.0.1"
   stack_trace:
     dependency: transitive
