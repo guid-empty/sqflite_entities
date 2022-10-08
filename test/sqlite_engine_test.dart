@@ -20,18 +20,11 @@ void main() {
       databaseFilePath,
     );
 
-    final profile = ProfileEntity(
-      firstName: 'John',
-      lastName: 'Smith',
-      age: 30,
-    );
-
-    await engine.storeEntity(profile);
     return engine;
   }
 
   group(
-    'ClientDataCacheStorage',
+    'SqliteEngine',
     () {
       late Directory databaseFileDirectory;
 
@@ -50,10 +43,20 @@ void main() {
         await databaseFileDirectory.delete(recursive: true);
       });
 
-      test('should store and retrieve visits correctly', () async {
+      test('should store and retrieve entities correctly', () async {
+        await engine.storeEntity(ProfileEntity(
+          firstName: 'John',
+          lastName: 'Smith',
+          age: 30,
+        ));
+
         final entities = await engine.retrieveCollection<ProfileEntity>();
 
         expect(entities, isNotEmpty);
+        expect(entities.first.age, 30);
+        expect(entities.first.firstName, 'John');
+        expect(entities.first.lastName, 'Smith');
+        expect(entities.first.position, isNull);
       });
     },
   );
