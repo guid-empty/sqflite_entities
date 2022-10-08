@@ -30,6 +30,7 @@ class ProfileEntity {
     fieldType: SqlFieldType.text,
   )
   final String lastName;
+
   @SqlField(
     fieldName: 'position',
     fieldType: SqlFieldType.text,
