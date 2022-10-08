@@ -32,7 +32,7 @@ Table "profile" {
 
 ```
 
-![](./docs/schema.png)
+![](./doc/schema.png)
 
 ## to generate sqlite models and adapters 
 
