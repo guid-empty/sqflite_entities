@@ -1,0 +1,33 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    [build/**, lib/data/api/**.g.dart]
+  errors:
+    todo: ignore
+    invalid_assignment: warning
+    missing_return: error
+    dead_code: info
+  strong-mode:
+    implicit-casts: false
+
+linter:
+  rules:
+    annotate_overrides: true
+    await_only_futures: true
+    camel_case_types: true
+    cancel_subscriptions: true
+    close_sinks: true
+    comment_references: true
+    constant_identifier_names: true
+    control_flow_in_finally: true
+    empty_statements: true
+    sort_constructors_first: false
+    prefer_single_quotes: true
+    always_put_required_named_parameters_first: false
+    avoid_classes_with_only_static_members: false
+    lowercase_with_underscores: true
+    ignore_for_file: true
+    avoid_relative_lib_imports: true
+    unnecessary_const: true
+    avoid_void_async: true
