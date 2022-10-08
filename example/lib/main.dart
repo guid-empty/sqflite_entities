@@ -3,12 +3,20 @@ import 'package:how_to_use_sqlite_adapters/models/image_entity.dart';
 import 'package:how_to_use_sqlite_adapters/models/profile_entity.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_engine.dart';
-import 'package:sqflite_entities/sqflite_entities.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final storage = await _initDb();
+  final storage = ApplicationDBStorage();
+  storage.registryAdapters(
+    [
+      const ImageEntitySqlAdapter(),
+      const ProfileEntitySqlAdapter(),
+    ],
+  );
+  await storage.initialize(
+    databaseIdentity: 'test_only',
+  );
 
   await storage.storeEntity(
     ImageEntity(
@@ -44,21 +52,6 @@ Future<void> main() async {
   print(profiles.length);
 
   runApp(const MyApp());
-}
-
-Future<SqliteEngine> _initDb() async {
-  final storage = ApplicationDBStorage();
-  storage.registryAdapters(
-    [
-      const ImageEntitySqlAdapter(),
-      const ProfileEntitySqlAdapter(),
-    ],
-  );
-  await storage.initialize(
-    databaseIdentity: 'test_only',
-  );
-
-  return storage;
 }
 
 class MyApp extends StatelessWidget {
