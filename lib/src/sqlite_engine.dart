@@ -25,7 +25,7 @@ abstract class SqliteEngine {
 
   late final Map<Type, SqlAdapter> _adaptersMap;
 
-  late final String _databaseIdentity;
+  String? _databaseIdentity;
 
   SqliteEngine({
     ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.replace,

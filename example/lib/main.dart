@@ -4,6 +4,27 @@ import 'package:how_to_use_sqlite_adapters/models/profile_entity.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_engine.dart';
 import 'package:sqflite_entities/sqflite_entities.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = await _initDb();
+
+  await storage.storeEntity(
+    ImageEntity(
+      id: 33,
+      width: 100,
+      height: 200,
+      createdAt: DateTime.now(),
+      isDeleted: false,
+    ),
+  );
+
+  final images = await storage.retrieveCollection<ImageEntity>();
+  print(images.length);
+
+  runApp(const MyApp());
+}
+
 Future<SqliteEngine> _initDb() async {
   final storage = ApplicationDBStorage();
   storage.registryAdapters(
@@ -17,25 +38,6 @@ Future<SqliteEngine> _initDb() async {
   );
 
   return storage;
-}
-
-Future<void> main() async {
-  final storage = await _initDb();
-
-  await storage.storeEntity(
-    ImageEntity(
-      id: 1,
-      width: 100,
-      height: 200,
-      createdAt: DateTime.now(),
-      isDeleted: false,
-    ),
-  );
-
-  final images = await storage.retrieveCollection<ImageEntity>();
-  print(images.length);
-
-  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -64,8 +66,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -77,23 +77,14 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,5 +136,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
 }
