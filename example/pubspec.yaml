@@ -18,6 +18,8 @@ dependencies:
   sqflite_entities:
     path: ./../
 
+  sqflite: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

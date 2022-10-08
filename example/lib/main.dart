@@ -3,10 +3,12 @@ import 'package:how_to_use_sqlite_adapters/models/image_entity.dart';
 import 'package:how_to_use_sqlite_adapters/models/profile_entity.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_engine.dart';
+import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Sqflite.setDebugModeOn(true);
   final storage = ApplicationDBStorage();
   storage.registryAdapters(
     [
