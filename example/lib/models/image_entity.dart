@@ -1,4 +1,4 @@
-import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
+import 'package:example/sqlite/sqlite_codec.dart';
 import 'package:sqflite_entities/sqflite_entities.dart';
 
 part 'image_entity.sql.g.dart';

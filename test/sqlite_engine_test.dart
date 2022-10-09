@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_entities/src/sqlite_engine.dart';
+import 'package:sqflite_entities/sqflite_entities.dart';
 
 import 'environment.dart';
-import 'models/profile_entity.dart';
+import 'models/user_profile_entity.dart';
 
 void main() {
   late SqliteEngine engine;
@@ -16,7 +16,7 @@ void main() {
   Future<SqliteEngine> _prepareSqliteEngine(
     String databaseFilePath,
   ) async {
-    engine = await initializePerInstanceSqliteEngineEnvironment(
+    engine = await initializeTestDbEngineEnvironment(
       databaseFilePath,
     );
 

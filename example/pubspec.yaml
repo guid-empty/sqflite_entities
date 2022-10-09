@@ -1,4 +1,4 @@
-name: how_to_use_sqlite_adapters
+name: example
 description: A new Flutter package.
 version: 0.0.1
 homepage:
@@ -11,6 +11,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  sqflite_entities_annotations:
+    git:
+      ref: master
+      url: git@github.com:guid-empty/sqflite_entities_annotations.git
 
   sqflite_entities:
     git:
@@ -31,7 +36,6 @@ dev_dependencies:
     git:
       ref: master
       url: git@github.com:guid-empty/sqflite_entities_generator.git
-
 
 flutter:
   uses-material-design: true

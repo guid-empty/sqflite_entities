@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:sqflite/sqflite_dev.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_entities/src/sqlite_engine.dart';
+import 'package:sqflite_entities/sqflite_entities.dart';
 
-import 'models/profile_entity.dart';
 import 'models/test_db_engine.dart';
+import 'models/user_profile_entity.dart';
 
-Future<SqliteEngine> initializePerInstanceSqliteEngineEnvironment(
+Future<SqliteEngine> initializeTestDbEngineEnvironment(
   String databaseFilePath,
 ) async {
   setMockDatabaseFactory(databaseFactoryFfi);

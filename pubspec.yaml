@@ -6,6 +6,7 @@ publish_to: none
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
+  flutter: ">=2.0.0"
 
 dependencies:
   build_runner: ^2.2.0
@@ -14,6 +15,11 @@ dependencies:
   build: ^2.0.0
   sqflite: ^2.0.0
   path: ^1.8.0
+
+  sqflite_entities_annotations:
+    git:
+      ref: master
+      url: git@github.com:guid-empty/sqflite_entities_annotations.git
 
 dev_dependencies:
   test:

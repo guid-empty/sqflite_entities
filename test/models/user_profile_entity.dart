@@ -1,9 +1,7 @@
-import 'package:sqflite_entities/src/annotations/sql_entity_definition.dart';
-import 'package:sqflite_entities/src/annotations/sql_field.dart';
-import 'package:sqflite_entities/src/annotations/sql_field_type.dart';
-import 'package:sqflite_entities/src/sql_adapter.dart';
+import 'package:sqflite_entities/sqflite_entities.dart';
+import 'package:sqflite_entities_annotations/sqflite_entities_annotations.dart';
 
-part 'profile_entity.sql.g.dart';
+part 'user_profile_entity.sql.g.dart';
 
 @SqlEntityDefinition(
   tableName: 'profile',

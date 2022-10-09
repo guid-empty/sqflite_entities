@@ -410,8 +410,14 @@
       "languageVersion": "2.16"
     },
     {
+      "name": "sqflite_entities_annotations",
+      "rootUri": "file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "sqflite_entities_generator",
-      "rootUri": "file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_generator-4d74e49035d377a83ddd8e54c9560ca9f6d4bee7/",
+      "rootUri": "file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -542,7 +548,7 @@
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2022-10-09T15:49:52.377691Z",
+  "generated": "2022-10-09T20:22:35.149554Z",
   "generator": "pub",
   "generatorVersion": "2.17.6"
 }

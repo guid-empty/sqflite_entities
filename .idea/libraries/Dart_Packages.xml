@@ -643,14 +643,21 @@
         <entry key="sqflite_entities">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities-dde02dde0c773e62200692681f4545386450b692/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities-e6b9905d9bcf6c4d1036474ec73ad5049eec8ef0/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="sqflite_entities_annotations">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/lib" />
             </list>
           </value>
         </entry>
         <entry key="sqflite_entities_generator">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_generator-4d74e49035d377a83ddd8e54c9560ca9f6d4bee7/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/lib" />
             </list>
           </value>
         </entry>
@@ -838,8 +845,9 @@
       </option>
     </properties>
     <CLASSES>
-      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities-dde02dde0c773e62200692681f4545386450b692/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_generator-4d74e49035d377a83ddd8e54c9560ca9f6d4bee7/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities-e6b9905d9bcf6c4d1036474ec73ad5049eec8ef0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-34.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-47.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/analyzer-3.2.0/lib" />

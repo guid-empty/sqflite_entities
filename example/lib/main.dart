@@ -1,8 +1,8 @@
+import 'package:example/models/image_entity.dart';
+import 'package:example/models/profile_entity.dart';
+import 'package:example/sqlite/application_db_engine.dart';
+import 'package:example/sqlite/sqlite_codec.dart';
 import 'package:flutter/material.dart';
-import 'package:how_to_use_sqlite_adapters/models/image_entity.dart';
-import 'package:how_to_use_sqlite_adapters/models/profile_entity.dart';
-import 'package:how_to_use_sqlite_adapters/sqlite/application_db_engine.dart';
-import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<void> main() async {
