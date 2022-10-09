@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sqlite_model_adapters.iml" filepath="$PROJECT_DIR$/.idea/sqlite_model_adapters.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sqflite_entities.iml" filepath="$PROJECT_DIR$/.idea/sqflite_entities.iml" />
     </modules>
   </component>
 </project>

@@ -1,6 +1,5 @@
 import 'package:how_to_use_sqlite_adapters/sqlite/sqlite_codec.dart';
 import 'package:sqflite_entities/sqflite_entities.dart';
-import 'package:sqflite_entities_annotations/sqflite_entities_annotations.dart';
 
 part 'image_entity.sql.g.dart';
 
