@@ -378,7 +378,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: e6b9905d9bcf6c4d1036474ec73ad5049eec8ef0
+      resolved-ref: "6bf7d894cb766c1fb84d1036c9a9473b005345bf"
       url: "git@github.com:guid-empty/sqflite_entities.git"
     source: git
     version: "0.0.1"

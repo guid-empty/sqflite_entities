@@ -643,7 +643,7 @@
         <entry key="sqflite_entities">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities-e6b9905d9bcf6c4d1036474ec73ad5049eec8ef0/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities-6bf7d894cb766c1fb84d1036c9a9473b005345bf/lib" />
             </list>
           </value>
         </entry>
@@ -845,7 +845,7 @@
       </option>
     </properties>
     <CLASSES>
-      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities-e6b9905d9bcf6c4d1036474ec73ad5049eec8ef0/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities-6bf7d894cb766c1fb84d1036c9a9473b005345bf/lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/lib" />
       <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-34.0.0/lib" />
