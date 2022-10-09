@@ -376,17 +376,19 @@ packages:
   sqflite_entities:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: master
+      resolved-ref: dde02dde0c773e62200692681f4545386450b692
+      url: "git@github.com:guid-empty/sqflite_entities.git"
+    source: git
     version: "0.0.1"
-  sqflite_entities_annotations:
-    dependency: "direct main"
+  sqflite_entities_generator:
+    dependency: "direct dev"
     description:
       path: "."
       ref: master
-      resolved-ref: "0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474"
-      url: "git@github.com:guid-empty/sqflite_entities_annotations.git"
+      resolved-ref: "4d74e49035d377a83ddd8e54c9560ca9f6d4bee7"
+      url: "git@github.com:guid-empty/sqflite_entities_generator.git"
     source: git
     version: "0.0.1"
   stack_trace:

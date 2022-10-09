@@ -12,14 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sqflite_entities_annotations:
+  sqflite_entities:
     git:
       ref: master
-      url: git@github.com:guid-empty/sqflite_entities_annotations.git
-
-
-  sqflite_entities:
-    path: ./../
+      url: git@github.com:guid-empty/sqflite_entities.git
 
   sqflite: ^2.0.0
 
@@ -31,6 +27,11 @@ dev_dependencies:
   analyzer: ^4.7.0
   build: ^2.0.0
   flutter_lints: ^2.0.1
+  sqflite_entities_generator:
+    git:
+      ref: master
+      url: git@github.com:guid-empty/sqflite_entities_generator.git
+
 
 flutter:
   uses-material-design: true

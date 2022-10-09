@@ -467,6 +467,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1+1"
+  sqflite_entities_generator:
+    dependency: "direct dev"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "4d74e49035d377a83ddd8e54c9560ca9f6d4bee7"
+      url: "git@github.com:guid-empty/sqflite_entities_generator.git"
+    source: git
+    version: "0.0.1"
   sqlite3:
     dependency: transitive
     description:
