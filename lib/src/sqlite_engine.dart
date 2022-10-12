@@ -48,6 +48,10 @@ abstract class SqliteEngine {
     return (transaction ?? _database)!.delete(adapter.tableName);
   }
 
+  Future<void> close() async {
+    await _database?.close();
+  }
+
   Future<void> deleteEntity<T>({
     required String where,
     required List<dynamic> whereArgs,
