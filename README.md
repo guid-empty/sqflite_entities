@@ -74,10 +74,17 @@ We add the corresponding part file to the file itself,
 by analogy with how we do it for json_serializable, freezed or hive.
 
 For example,
+
+```dart
 part 'profile_entity.sql.g.dart';
+```shell
+
 
 Let's start code generation:
+
+```shell
 flutter pub run build_runner build --delete-conflicting-outputs
+```
 
 As a result, after code generation, the following functions will be available to us in the code:
 
@@ -138,7 +145,7 @@ await dbEngine.clearEntities<ProfileEntity>();
 ```
 
 If you need to return a set from the database according to your custom conditions,
-you can use the queryEntities construct:
+you can use the **queryEntities** construct:
 
 ```dart
 final selectedEntities = await dbEngine.queryEntities<ProfileEntity>(
@@ -205,7 +212,7 @@ class ProfileEntitySqlAdapter implements SqlAdapter<ProfileEntity> {
   const ProfileEntitySqlAdapter();
 
   @override
-Type get modelType => ProfileEntity;
+  Type get modelType => ProfileEntity;
 
   @override
   ProfileEntity deserialize(Map<String, dynamic> json) =>
@@ -239,7 +246,7 @@ They need some kind of engine.
 In the examples above, we worked with methods through a dbEngine instance.
 
 In order to be able to create the appropriate tables in the database for our entities after code generation,
-we create such an auxiliary class, inheriting from the provided SqliteEngine class.
+we create such an auxiliary class, inheriting from the provided **SqliteEngine** class.
 The only field that needs to be implemented is to specify the database version.
 
 
@@ -311,7 +318,7 @@ The following SqlFieldType enumeration types are supported:
 * text
 * blob
 
-What corresponds to the used sqlite type: https://www.sqlite.org/datatype3.html
+what corresponds to the used sqlite type: https://www.sqlite.org/datatype3.html
 
 ## What if we need to support DateTime for our entity?
 
@@ -320,7 +327,7 @@ we can support serialization / deserialization of this data type in any of the d
 supported in Sqlite,
 
 for example, convert datetime from dart to int data type via *microsecondsSinceEpoch* back
-via *DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch)**.
+via *DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch)*.
 
 The same is true for the boolean type, performing conversions to and from integer.
 
@@ -403,7 +410,7 @@ for example, for custom queries in queryEntities.
 ```
 
 
-## Migration from one database version to a new one
+## Migration from one database version to new one
 
 Above, we talked about creating our own SqliteEngine class,
 which will contain all the logic for working with entities.
