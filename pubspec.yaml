@@ -16,11 +16,6 @@ dependencies:
   sqflite: ^2.0.0
   path: ^1.8.0
 
-  sqflite_entities_annotations:
-    git:
-      ref: master
-      url: git@github.com:guid-empty/sqflite_entities_annotations.git
-
 dev_dependencies:
   test:
   flutter_driver:

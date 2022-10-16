@@ -1,11 +1,3 @@
-sqflite_entities_annotations
-2.15
-file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/
-file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_annotations-0d7e46ec52d0707d2e0b7c1bb66b6c93848b0474/lib/
-sqflite_entities_generator
-2.15
-file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/
-file:///Users/dushesatwork/.pub-cache/git/sqflite_entities_generator-3267ceb78d8ccccd240212df6058f49759ad6dca/lib/
 _fe_analyzer_shared
 2.17
 file:///Users/dushesatwork/.pub-cache/hosted/pub.dartlang.org/_fe_analyzer_shared-47.0.0/
@@ -362,4 +354,8 @@ sqflite_entities
 2.15
 file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities/
 file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities/lib/
+sqflite_entities_generator
+2.15
+file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities_generator/
+file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities_generator/lib/
 2

@@ -70,8 +70,7 @@ class ProfileEntitySqlAdapter implements SqlAdapter<ProfileEntity> {
 
   @override
   String get createEntityTableScript => '''
-        
-CREATE TABLE profile(
+        CREATE TABLE profile(
 		first_name TEXT NOT NULL ,
 		last_name TEXT NOT NULL ,
 		position TEXT,
