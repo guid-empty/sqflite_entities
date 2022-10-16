@@ -1,8 +1,8 @@
 name: sqflite_entities
-description: sqflite_entities
-version: 0.0.1
-homepage:
-publish_to: none
+description: ORM approach to work with sqflite packages that would allow you to get some ORM practices out of the box for working with classes in the code
+version: 0.1.0
+homepage: https://github.com/guid-empty/sqflite_entities
+publish_to: http://pub.dev
 
 environment:
   sdk: ">=2.15.0 <3.0.0"
