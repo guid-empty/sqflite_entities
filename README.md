@@ -533,7 +533,7 @@ To mark up your classes with **@Sql**... annotations,
 and to declare the Sqlite database engine class (under the hood is Sqflite), 
 you need to add sqflite_entities package to the pubspec in the dependencies:
 
-*sqflite_entities_annotations*
+*sqflite_entities*
 
 ```shell
 flutter pub add sqflite_entities
