@@ -11,9 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sqflite_entities:
-    path: ./../
-
+  sqflite_entities: ^0.0.1
   sqflite: ^2.0.0
 
 dev_dependencies:
