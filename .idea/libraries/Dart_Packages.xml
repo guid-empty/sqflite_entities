@@ -673,6 +673,7 @@
         <entry key="sqflite_entities_generator">
           <value>
             <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite_entities_generator-0.0.1/lib" />
               <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_generator-5731344f572047e509c57929e277fdf0b0843f8d/lib" />
             </list>
           </value>
@@ -998,6 +999,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.3+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite_common-2.3.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite_common_ffi-2.1.1+1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqflite_entities_generator-0.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sqlite3-1.8.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/sse-4.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0/lib" />
