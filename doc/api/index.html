@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.0.0">
+  <meta name="description" content="sqflite_entities API docs, for the Dart programming language.">
+  <title>sqflite_entities - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/guid-empty/sqflite_entities">sqflite_entities package</a></li>
+  </ol>
+  <div class="self-name">sqflite_entities</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="sqflite-entities">Sqflite entities</h1>
+<p>Sqflite package extension to add some ORM abilities. From Sqlite/Sqflite fan, with love ).</p>
+<h1 id="index">Index</h1>
+<ul>
+<li><a href="#index">Index</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#code-generation">Code generation</a></li>
+<li><a href="#what-is-inside">What is inside</a></li>
+<li><a href="#dbengine">DbEngine</a></li>
+<li><a href="#field-mapping">Field mapping</a></li>
+<li><a href="#what-if-we-need-to-support-datetime-for-our-entity">What if we need to support DateTime for our entity?</a></li>
+<li><a href="#primary-key">Primary Key</a></li>
+<li><a href="#custom-fields">Custom fields</a></li>
+<li><a href="#migration-from-one-database-version-to-new-one">Migration from one database version to new one</a></li>
+<li><a href="#hive-to-sqlite-migration">Hive to SQLite migration</a></li>
+<li><a href="#usage">Usage</a></li>
+</ul>
+<h2 id="motivation">Motivation</h2>
+<p>Sqflite (<a href="https://pub.dev/packages/sqflite">https://pub.dev/packages/sqflite</a>) is a cool and powerful sqlite package
+that supports a lot of stuff, including:</p>
+<ul>
+<li>Support transactions and batches</li>
+<li>Automatic version management during open</li>
+<li>Helpers for insert/query/update/delete queries</li>
+<li>DB operation executed in a background thread on iOS and Android</li>
+</ul>
+<p>But there is one thing missing - an ORM approach that would allow you to get some
+ORM practices out of the box for working with classes in the code,
+the instances of which you plan to store in the database and further continue to work with them.</p>
+<p>This package is an attempt to add some syntax sugar to Sqflite that makes it even easier,
+declarative, and safer when we are talking about data type conversions.</p>
+<p>I'll try to show you how it might look in our code.</p>
+<p>Imagine that we have an entity of type ProfileEntity that needs to be stored in the database.
+In Dart, it is declared like this:</p>
+<pre class="language-dart"><code class="language-dart">class ProfileEntity {
+  final String firstName;
+  final String lastName;
+  final String? position;
+  final String? profile;
+...
+}
+</code></pre>
+<p>If we want to store instances of this type in the database (we can reference it as <em>Entity</em> further),
+we can mark it up in the code with <strong>@SqlEntityDefinition</strong> annotations,
+including setting the name of the table in the database.</p>
+<p>For example, it might look like this:</p>
+<pre class="language-dart"><code class="language-dart">@SqlEntityDefinition(tableName: 'profile')
+class ProfileEntity {
+  @SqlField(fieldName: 'first_name')
+  final String firstName;
+
+  @SqlField(fieldName: 'last_name')
+  final String lastName;
+
+  @SqlField(fieldName: 'position')
+  final String? position;
+
+  @SqlField(fieldName: 'profile')
+  final String? profile;
+
+  @SqlField(fieldName: 'team_name')
+  final String? teamName;
+
+</code></pre>
+<p>In this example, using the <em>SqlEntityDefinition</em> annotation, we specify the name of the table (<em>profile</em>).
+Using the <em>SqlField</em> annotation, we determine which are the fields we need to store in the database,
+and corresponding columns to be used to store them.</p>
+<p>Very similar to Hive, isn't it <a href="https://pub.dev/packages/hive#store-objects">https://pub.dev/packages/hive#store-objects</a>?</p>
+<h2 id="code-generation">Code generation</h2>
+<p>Then there is the step of code generation.</p>
+<p>We add the corresponding part file to the file of the declared entity itself,
+by analogy with how we do it for json_serializable, freezed or hive etc.</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">part 'profile_entity.sql.g.dart';
+
+@SqlEntityDefinition(tableName: 'profile')
+class ProfileEntity {
+</code></pre>
+<p>Let's start code generation:</p>
+<pre class="language-shell"><code class="language-shell">flutter pub run build_runner build --delete-conflicting-outputs
+</code></pre>
+<p>As a result, after code generation, the following functions will be available to us in the code:</p>
+<p>Storing the Entity:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.storeEntity(
+    ProfileEntity(
+      firstName: 'A',
+      lastName: 'B',
+    ),
+  );
+</code></pre>
+<p>Get all available entities of specified Type:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.retrieveCollection&lt;ProfileEntity&gt;();
+</code></pre>
+<p>Or just the very first one:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.retrieveFirstEntity&lt;ProfileEntity&gt;();
+</code></pre>
+<p>Update an entity according to a given condition:</p>
+<pre class="language-dart"><code class="language-dart">final updatedEntity = ProfileEntity(
+    firstName: 'A',
+    lastName: 'C',
+  );
+
+await dbEngine.updateEntity(
+    updatedEntity,
+    where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
+    whereArgs: ['B'],
+  );
+</code></pre>
+<p>Or we can delete some entities by condition:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.deleteEntity&lt;ProfileEntity&gt;(
+    where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
+    whereArgs: ['B'],
+  );
+</code></pre>
+<p>or all entities at once:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.clearEntities&lt;ProfileEntity&gt;();
+</code></pre>
+<p>If you need to return a data set from the database according to your custom conditions,
+you can use the <strong>queryEntities</strong> construct:</p>
+<pre class="language-dart"><code class="language-dart">final selectedEntities = await dbEngine.queryEntities&lt;ProfileEntity&gt;(
+    where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
+    whereArgs: ['B'],
+    orderBy: '${ProfileEntitySqlAdapter.columns.firstName} ASC',
+    limit: 1
+  );
+</code></pre>
+<p>A very important thing that should not be forgotten is Ttransactions.</p>
+<p>They are also supported, just specify transaction object in helper methods:</p>
+<p>Example:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.beginTransaction((txn) async {
+    await dbEngine.updateEntity(
+      updatedEntity,
+      where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
+      whereArgs: ['B'],
+      transaction: txn,
+    );
+
+    await dbEngine.deleteEntity&lt;ProfileEntity&gt;(
+      where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
+      whereArgs: ['B'],
+      transaction: txn,
+    );
+  });
+</code></pre>
+<p>And batches:</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.beginTransaction(
+      (transaction) async {
+        final batch = transaction.batch();
+        dbEngine.storeEntitiesBatch(entities: entities, batch: batch);
+        await batch commit(noResult: true);
+      },
+    )
+</code></pre>
+<h2 id="what-is-inside">What is inside?</h2>
+<p>After code generation for each entity in the generated classes, we get several important things:</p>
+<ul>
+<li>Factory method to create Entity from raw sql data</li>
+<li>Factory method to get raw sql data from class annotated by SqlEntityDefinition</li>
+<li>SqlAdapter Class - Helper class used to create table for class annotated by SqlEntityDefinition.
+This class contains the logic for serializing an entity into a database format (in fact, it is a Json Map),
+deserialization logic, and a Sqlite script for creating a table inside the database.</li>
+</ul>
+<p>For the examples above, our SqlAdapter will look like this:</p>
+<pre class="language-dart"><code class="language-dart">class ProfileEntitySqlAdapter implements SqlAdapter&lt;ProfileEntity&gt; {
+  static const ProfileEntityColumnsDeclaration columns =
+      ProfileEntityColumnsDeclaration();
+
+  const ProfileEntitySqlAdapter();
+
+  @override
+  Type get modelType =&gt; ProfileEntity;
+
+  @override
+  ProfileEntity deserialize(Map&lt;String, dynamic&gt; json) =&gt;
+      _$ProfileEntityFromSqlDataMap(json);
+
+  @override
+  Map&lt;String, dynamic&gt; serialize(ProfileEntity entity) =&gt;
+      _$ProfileEntityToSqlDataMap(entity);
+
+  @override
+  String get tableName =&gt; 'profile';
+
+  @override
+  String get createEntityTableScript =&gt; '''
+  CREATE TABLE profile(
+    first_name TEXT NOT NULL ,
+    last_name TEXT NOT NULL ,
+    position TEXT,
+    profile TEXT,
+    team_name TEXT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    created INTEGER NOT NULL DEFAULT (DATETIME('now')))
+      ''';
+}
+</code></pre>
+<h2 id="dbengine">DbEngine</h2>
+<p>SqlAdapters themselves do not know how to work with a database.
+They need some kind of engine.
+In the examples above, we worked with methods through a dbEngine instance.</p>
+<p>What is it?</p>
+<p>In order to be able to create the appropriate tables in the database for our entities after code generation,
+we create such an auxiliary class, inherited from the provided <strong>SqliteEngine</strong> class.
+The only field that needs to be implemented is to specify the database version (to be able to migrate in the future).</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">class ApplicationDBEngine extends SqliteEngine {
+  @override
+  int get dbVersion =&gt; 1;
+}
+</code></pre>
+<p>Next, when we want to work with database we need to create and initialize an instance of our SqliteEngine:</p>
+<pre class="language-dart"><code class="language-dart">final dbEngine = ApplicationDBEngine();
+</code></pre>
+<p>Using the <strong>registryAdapters</strong> method,
+we enumerate the list of sql adapters of all types for which we need to create our own tables:</p>
+<pre class="language-dart"><code class="language-dart">dbEngine.registryAdapters(
+    [
+      const ImageEntitySqlAdapter(),
+      const ProfileEntitySqlAdapter(),
+    ],
+  );
+</code></pre>
+<p>The last thing we need is to create the database itself in case it doesn't exist.</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.initialize(databaseIdentity: 'test_only')
+</code></pre>
+<p>You can also configure a specific file name using the optional <em>filePathFactory</em> parameter.</p>
+<pre class="language-dart"><code class="language-dart">await dbEngine.initialize(
+    databaseIdentity: 'test_only',
+    filePathFactory: () =&gt; applicationDatabaseFilePath,
+  )
+</code></pre>
+<h2 id="field-mapping">Field mapping</h2>
+<p>Above, for the Profile entity, we used the <em>TEXT</em> data type to store entity fields.
+This data type is used by default, if we do not specify otherwise.</p>
+<p>But we can specify any of the supported Sqlite data types using the SqlField annotation
+on the fieldType field:</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">  @SqlField(
+    fieldName: 'uploaded_at',
+    fieldType: SqlFieldType.integer,
+</code></pre>
+<p>The following <strong>SqlFieldType</strong> enumeration types are supported:</p>
+<ul>
+<li>integer</li>
+<li>real</li>
+<li>text</li>
+<li>blob</li>
+</ul>
+<p>what corresponds to the used sqlite type: <a href="https://www.sqlite.org/datatype3.html">https://www.sqlite.org/datatype3.html</a></p>
+<h2 id="what-if-we-need-to-support-datetime-for-our-entity">What if we need to support DateTime for our entity?</h2>
+<p>Sqlite does not support the Date data type. 
+However, using the <strong>Sqlfield</strong> annotation,
+we can support custom serialization / deserialization of this data type to any of the data types
+supported in Sqlite.</p>
+<p>For example, convert datetime from dart to int data type via <em>microsecondsSinceEpoch</em>. 
+Back via <em>DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch)</em>.</p>
+<p>The same is true for the boolean type, performing conversions to and from integer.</p>
+<p>We can do this by specifying tear-off methods for the toRawData, fromRawData factories.</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">  @SqlField(
+    fieldName: 'created_at',
+    fieldType: SqlFieldType.integer,
+    toRawData: SqliteCodec.dateTimeEncode,
+    fromRawData: SqliteCodec.dateTimeDecode,
+  )
+  final DateTime createdAt;
+
+...
+
+abstract class SqliteCodec {
+  static DateTime dateTimeDecode(int microsecondsSinceEpoch) =&gt;
+      DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
+
+  static int dateTimeEncode(DateTime value) =&gt; value.microsecondsSinceEpoch;
+}
+
+</code></pre>
+<h2 id="primary-key">Primary Key</h2>
+<p>In order to maintain the uniqueness of records, using the SqlField annotation,
+you can specify that a particular field will be used as the primary key in the corresponding table.</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">  @SqlField(
+    fieldName: 'id',
+    fieldType: SqlFieldType.integer,
+    isPrimaryKey: true
+  )
+  final int id;
+</code></pre>
+<p>You can specify <em>isPrimaryKey</em> for several fields - in this case, the compound primary key will be formed.</p>
+<h2 id="custom-fields">Custom fields</h2>
+<p>It happens that for some entities we need to support some service fields in the database table
+that should not be part of the class.</p>
+<p>This can be an auto increment field, or other fields with default values set,
+such as the date a record was created in a table, or the date it was updated.</p>
+<p>In this case, you can use the <strong>SqlEntityDefinition</strong> annotation
+by specifying such fields outside the entity itself.</p>
+<p>For example,</p>
+<pre class="language-dart"><code class="language-dart">@SqlEntityDefinition(
+  tableName: 'profile',
+  fields: [
+    SQLField(
+      fieldName: 'id',
+      fieldType: SqlFieldType.integer,
+      isAutoIncrement: true,
+      isPrimaryKey: true,
+    ),
+    SQLField(
+        fieldName: 'created',
+        fieldType: SqlFieldType.integer,
+        defaultValueExpression: '(DATETIME(\'now\'))'),
+  ],
+)
+</code></pre>
+<p>For the case above, these fields can also be used in where expressions,
+for example, for custom queries in queryEntities.</p>
+<pre class="language-dart"><code class="language-dart">  await dbEngine.queryEntities&lt;ProfileEntity&gt;(
+    where: '${ProfileEntitySqlAdapter.columns.created} &gt; ? ',
+    whereArgs: [
+      lastCreatedDate,
+    ],
+  );
+</code></pre>
+<h2 id="migration-from-one-database-version-to-new-one">Migration from one database version to new one</h2>
+<p>Above, we talked about creating our own SqliteEngine class,
+which will contain all the logic for working with entities.</p>
+<pre class="language-dart"><code class="language-dart">class ApplicationDBEngine extends SqliteEngine {
+  @override
+  int get dbVersion =&gt; 1;
+}
+</code></pre>
+<p>It was important to specify the version number.</p>
+<p>It often happens that the database changes and it is necessary to support it with an upgrade to a new version.</p>
+<p>There is also support for such a scenario, and it is implemented through the implementation of the property</p>
+<pre class="language-dart"><code class="language-dart">Map&lt;int, DatabaseMigration&gt; get migrations;
+</code></pre>
+<p><em>migrations</em> getter should return a Map whose key is the version number to which the script specified by the DatabaseMigration
+function will be executed.</p>
+<p>For example, such migrations might look like this:</p>
+<pre class="language-dart"><code class="language-dart">  Map&lt;int, DatabaseMigration&gt; get migrations =&gt; {
+        2: (db) =&gt; db.execute(
+              'ALTER TABLE profile ADD COLUMN team_lead TEXT',
+            ),
+        3: (db) =&gt; db.execute(
+              'ALTER TABLE image ADD COLUMN created INTEGER',
+            ),
+      };
+</code></pre>
+<p>This collection of migrations tells us that if version 2 is installed on the client,
+and the current version of the new database should become 3,
+then only the script will be executed:</p>
+<pre class="language-sql"><code class="language-sql">ALTER TABLE image ADD COLUMN created INTEGER
+</code></pre>
+<p>If version 1 was previously installed, then both migrations will be performed -
+from version 1 to version 2, and from version 2 to version 3.</p>
+<h2 id="hive-to-sqlite-migration">Hive to SQLite migration</h2>
+<p>As shown above, the proposed approach is very similar to Hive,
+when we use annotations to define the types that Hive will work with.</p>
+<p>The <em>@HiveType</em> annotation corresponds to the <em>SqlEntityDefinition</em>.</p>
+<p>@HiveField to @SqlField.</p>
+<p><em>TypeAdapter</em> is responsible for about the same functions as <em>SqlAdapter</em>.</p>
+<p>At the same time, the logic for registering a list of such adapters is also very similar.</p>
+<p>Compare the code:</p>
+<pre class="language-dart"><code class="language-dart">hive.registerAdapter(ImageEntityAdapter());
+hive.registerAdapter(ProfileEntityAdapter());
+</code></pre>
+<p>and</p>
+<pre class="language-dart"><code class="language-dart">  dbEngine.registryAdapters(
+    [
+      const ImageEntitySqlAdapter(),
+      const ProfileEntitySqlAdapter(),
+    ],
+  );
+</code></pre>
+<p>Therefore, if you want to switch from Hive to Sqflite, it will be quite easy for you to do it.
+Of course it won't be so easy ). 
+You will need to refactor all interactions with your entities in the code (to store them, retrieve etc).</p>
+<p>But, welcome.</p>
+<h2 id="usage">Usage</h2>
+<p>To mark up your classes with <strong>@Sql</strong>... annotations, 
+and to declare the Sqlite database engine class (under the hood is Sqflite), 
+you need to add sqflite_entities package to the pubspec in the dependencies:</p>
+<p><em>sqflite_entities</em></p>
+<pre class="language-shell"><code class="language-shell">flutter pub add sqflite_entities
+</code></pre>
+<p>To perform the code generation, you need to add the <em>sqflite_entities_generator</em> package to dev_dependencies:</p>
+<pre class="language-shell"><code class="language-shell">flutter pub add sqflite_entities_generator --dev
+</code></pre>
+<p>Wishes and comments are welcome.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="sqflite_entities">
+  <span class="name"><a href="sqflite_entities/sqflite_entities-library.html">sqflite_entities</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="sqflite_entities_annotations">
+  <span class="name"><a href="sqflite_entities_annotations/sqflite_entities_annotations-library.html">sqflite_entities_annotations</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/guid-empty/sqflite_entities">sqflite_entities package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">sqflite_entities</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="sqflite_entities/sqflite_entities-library.html">sqflite_entities</a></li>
+      <li><a href="sqflite_entities_annotations/sqflite_entities_annotations-library.html">sqflite_entities_annotations</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    sqflite_entities
+      0.0.2+2
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

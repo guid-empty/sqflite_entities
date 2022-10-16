@@ -8,7 +8,7 @@ typedef DatabaseFilePathFactory = String Function();
 typedef DatabaseMigration = Future<void> Function(Database);
 
 ///
-/// Базовый класс для работы с локальным хранилищем данных на основе Sqlite;
+/// Base Engine class to work with local storage based on Sqlite
 ///
 /// How to know current version of sqlite -
 /// https://github.com/tekartik/sqflite/blob/master/sqflite/doc/version.md
