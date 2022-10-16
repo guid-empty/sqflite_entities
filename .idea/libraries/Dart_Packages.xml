@@ -663,10 +663,17 @@
             </list>
           </value>
         </entry>
+        <entry key="sqflite_entities">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities-aec6cb1b8e802e49d266a4fc882adf83e5eab124/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="sqflite_entities_generator">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../sqflite_entities_generator/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/sqflite_entities_generator-5731344f572047e509c57929e277fdf0b0843f8d/lib" />
             </list>
           </value>
         </entry>
@@ -861,6 +868,8 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities-aec6cb1b8e802e49d266a4fc882adf83e5eab124/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/sqflite_entities_generator-5731344f572047e509c57929e277fdf0b0843f8d/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/dart-unpub.taxi.yandex-team.ru/async-2.8.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/dart-unpub.taxi.yandex-team.ru/boolean_selector-2.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/dart-unpub.taxi.yandex-team.ru/characters-1.2.0/lib" />
@@ -1026,7 +1035,6 @@
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/flutter_goldens/lib" />
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/flutter_test/lib" />
       <root url="file://$USER_HOME$/fvm/versions/3.0.5/packages/fuchsia_remote_debug_protocol/lib" />
-      <root url="file://$PROJECT_DIR$/../sqflite_entities_generator/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

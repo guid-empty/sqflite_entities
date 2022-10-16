@@ -9,7 +9,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Sqflite.setDebugModeOn(true);
-  final dbEngine = ApplicationDBEngine();
+
   dbEngine.registryAdapters(
     [
       const ImageEntitySqlAdapter(),
@@ -53,6 +53,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+final dbEngine = ApplicationDBEngine();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -79,7 +81,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  late Future<List<ProfileEntity>> profileEntitiesLoaderFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -87,31 +89,48 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: FutureBuilder(
+        future: profileEntitiesLoaderFuture,
+        initialData: const [],
+        builder: (_, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView(
+              children: (snapshot.requireData as List<ProfileEntity>)
+                  .map((e) => SizedBox(
+                        height: 40,
+                        child: Text('${e.firstName} ${e.lastName}'.toString()),
+                      ))
+                  .toList(),
+            );
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () async {
+          await dbEngine.storeEntity(
+            ProfileEntity(
+              firstName: 'John',
+              lastName: 'Smith',
+            ),
+          );
+          fetchProfileEntities();
+        },
+        tooltip: 'Add profile',
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  void fetchProfileEntities() {
+    profileEntitiesLoaderFuture = dbEngine.retrieveCollection<ProfileEntity>();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfileEntities();
   }
 }
