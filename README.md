@@ -524,7 +524,7 @@ Therefore, if you want to switch from Hive to Sqflite, it will be quite easy for
 Of course it won't be so easy ). 
 You will need to refactor all interactions with your entities in the code (to store them, retrieve etc).
 
-But, welcom.
+But, welcome.
 
 
 ## Usage
