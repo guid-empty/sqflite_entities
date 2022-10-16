@@ -1,5 +1,22 @@
 # Sqflite entities
 
+Sqflite package extension to add some ORM abilities. From Sqlite/Sqflite fan, with love ).
+
+# Index
+
+- [Index](#index)
+- [Motivation](#motivation)
+- [Code generation](#code-generation)
+- [What is inside](#what-is-inside)
+- [DbEngine](#dbengine)
+- [Field mapping](#field-mapping)
+- [What if we need to support DateTime for our entity?](#what-if-we-need-to-support-datetime-for-our-entity)
+- [Primary Key](#primary-key)
+- [Custom fields](#custom-fields)
+- [Migration from one database version to new one](#migration-from-one-database-version-to-new-one)
+- [Hive to SQLite migration](#hive-to-sqlite-migration)
+- [Usage](#usage)
+
 ## Motivation
 
 Sqflite (https://pub.dev/packages/sqflite) is a cool and powerful sqlite package
@@ -12,13 +29,13 @@ that supports a lot of stuff, including:
 
 But there is one thing missing - an ORM approach that would allow you to get some
 ORM practices out of the box for working with classes in the code,
-the instances of which you plan to store in the database and somehow further work with them.
+the instances of which you plan to store in the database and further continue to work with them.
 
 
-This package is an attempt to add some syntactic sugar to Sqflite that makes it even easier,
-declarative, and safer when it comes to data type conversions.
+This package is an attempt to add some syntax sugar to Sqflite that makes it even easier,
+declarative, and safer when we are talking about data type conversions.
 
-I'll try to show you how it might look in code.
+I'll try to show you how it might look in our code.
 
 Imagine that we have an entity of type ProfileEntity that needs to be stored in the database.
 In Dart, it is declared like this:
@@ -34,8 +51,8 @@ class ProfileEntity {
 }
 ```
 
-If we want to store instances of this type in the database,
-we can mark it up in the code with @Sql<> annotations,
+If we want to store instances of this type in the database (we can reference it as *Entity* further),
+we can mark it up in the code with **@SqlEntityDefinition** annotations,
 including setting the name of the table in the database.
 
 For example, it might look like this:
@@ -60,25 +77,27 @@ class ProfileEntity {
 
 ```
 
-In this example, using the *SqlEntityDefinition* annotation, we specify the name of the table,
-using the *SqlField* annotations, we determine which fields we need to store in the database,
-and in which corresponding columns.
+In this example, using the *SqlEntityDefinition* annotation, we specify the name of the table (*profile*).
+Using the *SqlField* annotation, we determine which are the fields we need to store in the database,
+and corresponding columns to be used to store them.
 
 Very similar to Hive, isn't it https://pub.dev/packages/hive#store-objects?
 
 ## Code generation
 
-Then there is the issue of code generation.
+Then there is the step of code generation.
 
-We add the corresponding part file to the file itself,
-by analogy with how we do it for json_serializable, freezed or hive.
+We add the corresponding part file to the file of the declared entity itself,
+by analogy with how we do it for json_serializable, freezed or hive etc.
 
 For example,
 
 ```dart
 part 'profile_entity.sql.g.dart';
-```shell
 
+@SqlEntityDefinition(tableName: 'profile')
+class ProfileEntity {
+```
 
 Let's start code generation:
 
@@ -88,7 +107,7 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 As a result, after code generation, the following functions will be available to us in the code:
 
-Entity persistence:
+Storing the Entity:
 
 ```dart
 await dbEngine.storeEntity(
@@ -99,7 +118,7 @@ await dbEngine.storeEntity(
   );
 ```
 
-Get all available entities:
+Get all available entities of specified Type:
 
 ```dart
 await dbEngine.retrieveCollection<ProfileEntity>();
@@ -129,7 +148,7 @@ await dbEngine.updateEntity(
 ```
 
 
-Or delete by condition
+Or we can delete some entities by condition:
 
 ```dart
 await dbEngine.deleteEntity<ProfileEntity>(
@@ -144,7 +163,7 @@ or all entities at once:
 await dbEngine.clearEntities<ProfileEntity>();
 ```
 
-If you need to return a set from the database according to your custom conditions,
+If you need to return a data set from the database according to your custom conditions,
 you can use the **queryEntities** construct:
 
 ```dart
@@ -156,9 +175,9 @@ final selectedEntities = await dbEngine.queryEntities<ProfileEntity>(
   );
 ```
 
-A very important thing that should not be forgotten is transactions.
+A very important thing that should not be forgotten is Ttransactions.
 
-They are also supported:
+They are also supported, just specify transaction object in helper methods:
 
 Example:
 
@@ -168,17 +187,16 @@ await dbEngine.beginTransaction((txn) async {
       updatedEntity,
       where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
       whereArgs: ['B'],
-      transaction: txn
+      transaction: txn,
     );
 
     await dbEngine.deleteEntity<ProfileEntity>(
       where: '${ProfileEntitySqlAdapter.columns.lastName} == ?',
       whereArgs: ['B'],
-      transaction: txn
+      transaction: txn,
     );
   });
 ```
-
 
 And batches:
 
@@ -245,9 +263,11 @@ SqlAdapters themselves do not know how to work with a database.
 They need some kind of engine.
 In the examples above, we worked with methods through a dbEngine instance.
 
+What is it?
+
 In order to be able to create the appropriate tables in the database for our entities after code generation,
-we create such an auxiliary class, inheriting from the provided **SqliteEngine** class.
-The only field that needs to be implemented is to specify the database version.
+we create such an auxiliary class, inherited from the provided **SqliteEngine** class.
+The only field that needs to be implemented is to specify the database version (to be able to migrate in the future).
 
 
 For example,
@@ -259,14 +279,13 @@ class ApplicationDBEngine extends SqliteEngine {
 }
 ```
 
-
-Next, when starting our application, we need to create and initialize an instance of our SqliteEngine:
+Next, when we want to work with database we need to create and initialize an instance of our SqliteEngine:
 
 ```dart
 final dbEngine = ApplicationDBEngine();
 ```
 
-Using the registryAdapters method,
+Using the **registryAdapters** method,
 we enumerate the list of sql adapters of all types for which we need to create our own tables:
 
 ```dart
@@ -277,7 +296,6 @@ dbEngine.registryAdapters(
     ],
   );
 ```
-
 
 The last thing we need is to create the database itself in case it doesn't exist.
 
@@ -297,8 +315,8 @@ await dbEngine.initialize(
 
 ## Field mapping
 
-Above, for the Profile entity, we used the *TEXT* data type,
-which is used by default, if we do not specify otherwise.
+Above, for the Profile entity, we used the *TEXT* data type to store entity fields.
+This data type is used by default, if we do not specify otherwise.
 
 But we can specify any of the supported Sqlite data types using the SqlField annotation
 on the fieldType field:
@@ -308,10 +326,10 @@ For example,
 ```dart
   @SqlField(
     fieldName: 'uploaded_at',
-    fieldType: SqlFieldType.integer
+    fieldType: SqlFieldType.integer,
 ```
 
-The following SqlFieldType enumeration types are supported:
+The following **SqlFieldType** enumeration types are supported:
 
 * integer
 * real
@@ -322,12 +340,13 @@ what corresponds to the used sqlite type: https://www.sqlite.org/datatype3.html
 
 ## What if we need to support DateTime for our entity?
 
-Sqlite does not support the Date data type, however, using the Sqlfield annotation,
-we can support serialization / deserialization of this data type in any of the data types
-supported in Sqlite,
+Sqlite does not support the Date data type. 
+However, using the **Sqlfield** annotation,
+we can support custom serialization / deserialization of this data type to any of the data types
+supported in Sqlite.
 
-for example, convert datetime from dart to int data type via *microsecondsSinceEpoch* back
-via *DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch)*.
+For example, convert datetime from dart to int data type via *microsecondsSinceEpoch*. 
+Back via *DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch)*.
 
 The same is true for the boolean type, performing conversions to and from integer.
 
@@ -338,13 +357,22 @@ For example,
 ```dart
   @SqlField(
     fieldName: 'created_at',
-    fieldType: SqlFieldType.integer
+    fieldType: SqlFieldType.integer,
     toRawData: SqliteCodec.dateTimeEncode,
     fromRawData: SqliteCodec.dateTimeDecode,
   )
   final DateTime createdAt;
-```
 
+...
+
+abstract class SqliteCodec {
+  static DateTime dateTimeDecode(int microsecondsSinceEpoch) =>
+      DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
+
+  static int dateTimeEncode(DateTime value) => value.microsecondsSinceEpoch;
+}
+
+```
 
 ## Primary Key
 
@@ -356,26 +384,25 @@ For example,
 ```dart
   @SqlField(
     fieldName: 'id',
-    fieldType: SqlFieldType.integer
+    fieldType: SqlFieldType.integer,
     isPrimaryKey: true
   )
   final int id;
 ```
 
-
 You can specify *isPrimaryKey* for several fields - in this case, the compound primary key will be formed.
-
 
 ## Custom fields
 
 It happens that for some entities we need to support some service fields in the database table
 that should not be part of the class.
+
 This can be an auto increment field, or other fields with default values set,
 such as the date a record was created in a table, or the date it was updated.
 
 
-In this case, you can use the SqlEntityDefinition annotation extension
-by specifying individual fields outside the entity itself.
+In this case, you can use the **SqlEntityDefinition** annotation
+by specifying such fields outside the entity itself.
 
 For example,
 
@@ -385,19 +412,19 @@ For example,
   fields: [
     SQLField(
       fieldName: 'id',
-      fieldType: SqlFieldType.integer
-      isAutoIncrement: true
-      isPrimaryKey: true
+      fieldType: SqlFieldType.integer,
+      isAutoIncrement: true,
+      isPrimaryKey: true,
     ),
     SQLField(
         fieldName: 'created',
-        fieldType: SqlFieldType.integer
+        fieldType: SqlFieldType.integer,
         defaultValueExpression: '(DATETIME(\'now\'))'),
   ],
 )
 ```
 
-For this case above, these fields can also be used in where expressions,
+For the case above, these fields can also be used in where expressions,
 for example, for custom queries in queryEntities.
 
 ```dart
@@ -424,27 +451,27 @@ class ApplicationDBEngine extends SqliteEngine {
 
 It was important to specify the version number.
 
-It often happens that the base changes and it is necessary to support it with an upgrade to a new version.
+It often happens that the database changes and it is necessary to support it with an upgrade to a new version.
 
 There is also support for such a scenario, and it is implemented through the implementation of the property
 
 ```dart
-Map<int, DatabaseMigration> get migrations
+Map<int, DatabaseMigration> get migrations;
 ```
 
 
-*migrations* is a Map whose key is the version number to which the script specified by the DatabaseMigration
+*migrations* getter should return a Map whose key is the version number to which the script specified by the DatabaseMigration
 function will be executed.
 
-For example, a set of such migrations might look like this:
+For example, such migrations might look like this:
 
 ```dart
   Map<int, DatabaseMigration> get migrations => {
         2: (db) => db.execute(
-              'ALTER TABLE visits ADD COLUMN tasks_title_filter TEXT',
+              'ALTER TABLE profile ADD COLUMN team_lead TEXT',
             ),
         3: (db) => db.execute(
-              'ALTER TABLE visits ADD COLUMN is_started_online INTEGER',
+              'ALTER TABLE image ADD COLUMN created INTEGER',
             ),
       };
 ```
@@ -453,28 +480,28 @@ This collection of migrations tells us that if version 2 is installed on the cli
 and the current version of the new database should become 3,
 then only the script will be executed:
 
-```dart
+```sql
 ALTER TABLE visits ADD COLUMN is_started_online INTEGER
 ```
-
 
 If version 1 was previously installed, then both migrations will be performed -
 from version 1 to version 2, and from version 2 to version 3.
 
 ## Hive to SQLite migration
 
-
 As shown above, the proposed approach is very similar to Hive,
 when we use annotations to define the types that Hive will work with.
 
 The *@HiveType* annotation corresponds to the *SqlEntityDefinition*.
 
-@HiveField -> @SqlField
+@HiveField to @SqlField.
 
 *TypeAdapter* is responsible for about the same functions as *SqlAdapter*.
 
 
-At the same time, the mechanism for registering a list of such adapters is also very similar.
+At the same time, the logic for registering a list of such adapters is also very similar.
+
+Compare the code:
 
 ```dart
 hive.registerAdapter(ImageEntityAdapter());
@@ -494,30 +521,29 @@ and
 
 
 Therefore, if you want to switch from Hive to Sqflite, it will be quite easy for you to do it.
+Of course it won't be so easy ). 
+You will need to refactor all interactions with your entities in the code (to store them, retrieve etc).
 
-Welcom.
+But, welcom.
 
 
 ## Usage
 
-To mark up your classes with @Sql... annotations, you need to add to the pubspec in the dependencies package
+To mark up your classes with **@Sql**... annotations, 
+and to declare the Sqlite database engine class (under the hood is Sqflite), 
+you need to add sqflite_entities package to the pubspec in the dependencies:
+
 *sqflite_entities_annotations*
 
 ```shell
-flutter pub add sqflite_entities_annotations
+flutter pub add sqflite_entities
 ```
 
-To perform code generation, you need to add the *sqflite_entities_generator* package to dev_dependencies
+To perform the code generation, you need to add the *sqflite_entities_generator* package to dev_dependencies:
 
 ```shell
 flutter pub add sqflite_entities_generator --dev
 ```
 
-
-To declare the Sqlite database engine class (under the hood of Sqflite), include the *sqflite_entities* package
-
-```shell
-flutter pub add sqflite_entities
-```
 
 Wishes and comments are welcome.
