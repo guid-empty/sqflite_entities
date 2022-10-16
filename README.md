@@ -481,7 +481,7 @@ and the current version of the new database should become 3,
 then only the script will be executed:
 
 ```sql
-ALTER TABLE visits ADD COLUMN is_started_online INTEGER
+ALTER TABLE image ADD COLUMN created INTEGER
 ```
 
 If version 1 was previously installed, then both migrations will be performed -
