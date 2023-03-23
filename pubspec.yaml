@@ -1,6 +1,6 @@
 name: sqflite_entities
 description: ORM approach to work with sqflite packages that would allow you to get some ORM practices out of the box for working with classes in the code
-version: 0.0.3
+version: 0.0.3+1
 repository: https://github.com/guid-empty/sqflite_entities
 homepage: https://github.com/guid-empty/sqflite_entities
 
@@ -9,6 +9,8 @@ environment:
   flutter: ">=2.0.0"
 
 dependencies:
+  flutter:
+    sdk: flutter
   build_runner: ^2.3.3
   source_gen: ^1.2.7
   analyzer: ^5.9.0
