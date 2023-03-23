@@ -405,7 +405,7 @@
     },
     {
       "name": "sqflite_entities_generator",
-      "rootUri": "../../sqflite_entities_generator",
+      "rootUri": "file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqflite_entities_generator-0.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -536,7 +536,7 @@
       "languageVersion": "2.15"
     }
   ],
-  "generated": "2023-03-23T14:43:01.609959Z",
+  "generated": "2023-03-23T14:59:17.116660Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }

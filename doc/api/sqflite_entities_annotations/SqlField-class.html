@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">sqflite_entities</a></li>
     <li><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html">sqflite_entities_annotations</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -85,7 +91,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -96,7 +102,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd>
   This name will be used to create column name for current model property in resulting table
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -107,7 +113,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd>
   Sqlite field type. If you omit the field type TEXT will be used by default
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -118,7 +124,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd>
   Converted function used to transform Sqlite data to Dart Type
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -129,7 +135,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd class="inherited">
   The hash code for this object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -140,7 +146,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 </dt>
 <dd>
   This field used to mark field as auto incremented
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -154,7 +160,7 @@ if you want to save not only model fields (see more details in <a href="../sqfli
 You can use this field to mark several fields to create compound key
 used for creation the unique primary key in resulting table
 PRIMARY KEY(column_1,column_2,...)
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -165,7 +171,7 @@ PRIMARY KEY(column_1,column_2,...)
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -176,7 +182,7 @@ PRIMARY KEY(column_1,column_2,...)
 </dt>
 <dd>
   Converted function used to transform Dart Type to Sqlite data
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -198,7 +204,7 @@ PRIMARY KEY(column_1,column_2,...)
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -211,7 +217,7 @@ PRIMARY KEY(column_1,column_2,...)
 </dt>
 <dd class="inherited">
   A string representation of this object.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -232,7 +238,7 @@ PRIMARY KEY(column_1,column_2,...)
 </dt>
 <dd class="inherited">
   The equality operator.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -261,10 +267,10 @@ PRIMARY KEY(column_1,column_2,...)
 
     <h5>sqflite_entities_annotations library</h5>
     <ol>
-  <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#classes">Classes</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlEntityDefinition-class.html">SqlEntityDefinition</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlField-class.html">SqlField</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlFieldType-class.html">SqlFieldType</a></li>
+      <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#classes">Classes</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlEntityDefinition-class.html">SqlEntityDefinition</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlField-class.html">SqlField</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlFieldType-class.html">SqlFieldType</a></li>
 
 
 
@@ -272,8 +278,8 @@ PRIMARY KEY(column_1,column_2,...)
 
 
 
-  <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#typedefs">Typedefs</a></li>
-  <li><a href="../sqflite_entities_annotations/DataConverter.html">DataConverter</a></li>
+      <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#typedefs">Typedefs</a></li>
+        <li><a href="../sqflite_entities_annotations/DataConverter.html">DataConverter</a></li>
 
 </ol>
 
@@ -286,25 +292,25 @@ PRIMARY KEY(column_1,column_2,...)
           <li><a href="../sqflite_entities_annotations/SqlField/SqlField.html">SqlField</a></li>
 
 
-    <li class="section-title">
-      <a href="../sqflite_entities_annotations/SqlField-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../sqflite_entities_annotations/SqlField/defaultValueExpression.html">defaultValueExpression</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/fieldName.html">fieldName</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/fieldType.html">fieldType</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/fromRawData.html">fromRawData</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/isAutoIncrement.html">isAutoIncrement</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/isPrimaryKey.html">isPrimaryKey</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlField/toRawData.html">toRawData</a></li>
+        <li class="section-title">
+          <a href="../sqflite_entities_annotations/SqlField-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../sqflite_entities_annotations/SqlField/defaultValueExpression.html">defaultValueExpression</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/fieldName.html">fieldName</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/fieldType.html">fieldType</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/fromRawData.html">fromRawData</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/isAutoIncrement.html">isAutoIncrement</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/isPrimaryKey.html">isPrimaryKey</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlField/toRawData.html">toRawData</a></li>
 
-    <li class="section-title inherited"><a href="../sqflite_entities_annotations/SqlField-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+        <li class="section-title inherited"><a href="../sqflite_entities_annotations/SqlField-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
-    <li class="section-title inherited"><a href="../sqflite_entities_annotations/SqlField-class.html#operators">Operators</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+        <li class="section-title inherited"><a href="../sqflite_entities_annotations/SqlField-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
 
 
 
@@ -318,7 +324,7 @@ PRIMARY KEY(column_1,column_2,...)
 <footer>
   <span class="no-break">
     sqflite_entities
-      0.0.2+5
+      0.0.3
   </span>
 
   

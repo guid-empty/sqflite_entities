@@ -11,7 +11,7 @@
   
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
   
   <link rel="stylesheet" href="../static-assets/github.css?v1">
   <link rel="stylesheet" href="../static-assets/styles.css?v1">
@@ -21,12 +21,12 @@
 </head>
 
 
-<body data-base-href="../" data-using-base-href="false">
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
 
 <div id="overlay-under-drawer"></div>
 
 <header id="title">
-  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">sqflite_entities</a></li>
     <li><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html">sqflite_entities_annotations</a></li>
@@ -36,10 +36,16 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span class="material-symbols-outlined">
+        brightness_4
+      </span>
+    </label>
+  </div>
 </header>
-
 <main>
-
 
   <div id="dartdoc-main-content" class="main-content">
       <div>
@@ -72,7 +78,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd>
   The hash code for this object.
-  <div class="features">read-only, override</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">override</span></div>
 
 </dd>
 
@@ -83,7 +89,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd class="inherited">
   A representation of the runtime type of the object.
-  <div class="features">read-only, inherited</div>
+  <div class="features"><span class="feature">read-only</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -94,7 +100,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd>
   
-  <div class="features">final</div>
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -116,7 +122,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd class="inherited">
   Invoked when a non-existent method or property is accessed.
-  <div class="features">inherited</div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -129,7 +135,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd>
   A string representation of this object.
-  <div class="features">override</div>
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -150,7 +156,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 </dt>
 <dd>
   The equality operator.
-  <div class="features">override</div>
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -192,9 +198,9 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
   
   
 
-  <div>
-    <span class="signature"><code>SqlFieldType._(&#39;BLOB&#39;)</code></span>
-  </div>
+    <div>
+      <span class="signature"><code>SqlFieldType._(&#39;BLOB&#39;)</code></span>
+    </div>
 </dd>
 
         <dt id="integer" class="constant">
@@ -207,9 +213,9 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
   
   
 
-  <div>
-    <span class="signature"><code>SqlFieldType._(&#39;INTEGER&#39;)</code></span>
-  </div>
+    <div>
+      <span class="signature"><code>SqlFieldType._(&#39;INTEGER&#39;)</code></span>
+    </div>
 </dd>
 
         <dt id="real" class="constant">
@@ -222,9 +228,9 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
   
   
 
-  <div>
-    <span class="signature"><code>SqlFieldType._(&#39;REAL&#39;)</code></span>
-  </div>
+    <div>
+      <span class="signature"><code>SqlFieldType._(&#39;REAL&#39;)</code></span>
+    </div>
 </dd>
 
         <dt id="text" class="constant">
@@ -237,9 +243,9 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
   
   
 
-  <div>
-    <span class="signature"><code>SqlFieldType._(&#39;TEXT&#39;)</code></span>
-  </div>
+    <div>
+      <span class="signature"><code>SqlFieldType._(&#39;TEXT&#39;)</code></span>
+    </div>
 </dd>
 
         <dt id="values" class="constant">
@@ -252,9 +258,9 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
   
   
 
-  <div>
-    <span class="signature"><code>[integer, real, text, blob]</code></span>
-  </div>
+    <div>
+      <span class="signature"><code>[integer, real, text, blob]</code></span>
+    </div>
 </dd>
 
     </dl>
@@ -278,10 +284,10 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 
     <h5>sqflite_entities_annotations library</h5>
     <ol>
-  <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#classes">Classes</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlEntityDefinition-class.html">SqlEntityDefinition</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlField-class.html">SqlField</a></li>
-  <li><a href="../sqflite_entities_annotations/SqlFieldType-class.html">SqlFieldType</a></li>
+      <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#classes">Classes</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlEntityDefinition-class.html">SqlEntityDefinition</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlField-class.html">SqlField</a></li>
+        <li><a href="../sqflite_entities_annotations/SqlFieldType-class.html">SqlFieldType</a></li>
 
 
 
@@ -289,8 +295,8 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 
 
 
-  <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#typedefs">Typedefs</a></li>
-  <li><a href="../sqflite_entities_annotations/DataConverter.html">DataConverter</a></li>
+      <li class="section-title"><a href="../sqflite_entities_annotations/sqflite_entities_annotations-library.html#typedefs">Typedefs</a></li>
+        <li><a href="../sqflite_entities_annotations/DataConverter.html">DataConverter</a></li>
 
 </ol>
 
@@ -301,19 +307,19 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 
 
 
-    <li class="section-title">
-      <a href="../sqflite_entities_annotations/SqlFieldType-class.html#instance-properties">Properties</a>
-    </li>
-    <li><a href="../sqflite_entities_annotations/SqlFieldType/hashCode.html">hashCode</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlFieldType/value.html">value</a></li>
+        <li class="section-title">
+          <a href="../sqflite_entities_annotations/SqlFieldType-class.html#instance-properties">Properties</a>
+        </li>
+          <li><a href="../sqflite_entities_annotations/SqlFieldType/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlFieldType/value.html">value</a></li>
 
-    <li class="section-title"><a href="../sqflite_entities_annotations/SqlFieldType-class.html#instance-methods">Methods</a></li>
-    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlFieldType/toString.html">toString</a></li>
+        <li class="section-title"><a href="../sqflite_entities_annotations/SqlFieldType-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlFieldType/toString.html">toString</a></li>
 
-    <li class="section-title"><a href="../sqflite_entities_annotations/SqlFieldType-class.html#operators">Operators</a></li>
-    <li><a href="../sqflite_entities_annotations/SqlFieldType/operator_equals.html">operator ==</a></li>
+        <li class="section-title"><a href="../sqflite_entities_annotations/SqlFieldType-class.html#operators">Operators</a></li>
+          <li><a href="../sqflite_entities_annotations/SqlFieldType/operator_equals.html">operator ==</a></li>
 
 
 
@@ -335,7 +341,7 @@ using the <a href="../sqflite_entities_annotations/SqlField/toRawData.html">SqlF
 <footer>
   <span class="no-break">
     sqflite_entities
-      0.0.2+5
+      0.0.3
   </span>
 
   

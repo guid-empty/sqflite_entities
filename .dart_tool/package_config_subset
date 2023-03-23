@@ -246,6 +246,10 @@ sqflite_common_ffi
 2.18
 file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqflite_common_ffi-2.2.2/
 file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqflite_common_ffi-2.2.2/lib/
+sqflite_entities_generator
+2.15
+file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqflite_entities_generator-0.0.3/
+file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqflite_entities_generator-0.0.3/lib/
 sqlite3
 2.18
 file:///Users/dushesatwork/.pub-cache/hosted/pub.dev/sqlite3-1.10.1/
@@ -350,8 +354,4 @@ sqflite_entities
 2.15
 file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities/
 file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities/lib/
-sqflite_entities_generator
-2.15
-file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities_generator/
-file:///Users/dushesatwork/projects/sqflite_extension/sqflite_entities_generator/lib/
 2
