@@ -22,6 +22,7 @@ ImageEntity _$ImageEntityFromSqlDataMap(Map<String, dynamic> rawData) {
     width: rawData['width'] as int,
     height: rawData['height'] as int,
     isDeleted: SqliteCodec.boolDecodeNullable(rawData['is_deleted'] as int),
+    authorId: rawData['author_id'] as int?,
   );
 }
 
@@ -39,6 +40,7 @@ Map<String, dynamic> _$ImageEntityToSqlDataMap(ImageEntity instance) {
   val['width'] = instance.width;
   val['height'] = instance.height;
   val['is_deleted'] = SqliteCodec.boolEncodeNullable(instance.isDeleted);
+  val['author_id'] = instance.authorId;
   return val;
 }
 
@@ -56,6 +58,7 @@ class ImageEntityColumnsDeclaration {
   final String width = 'width';
   final String height = 'height';
   final String isDeleted = 'is_deleted';
+  final String authorId = 'author_id';
 }
 
 ///
@@ -92,6 +95,7 @@ CREATE TABLE images(
 		is_file_uploaded INTEGER NOT NULL ,
 		width INTEGER NOT NULL ,
 		height INTEGER NOT NULL ,
-		is_deleted INTEGER NOT NULL )
+		is_deleted INTEGER NOT NULL ,
+		author_id INTEGER)
       ''';
 }

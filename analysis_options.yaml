@@ -26,8 +26,6 @@ linter:
     prefer_single_quotes: true
     always_put_required_named_parameters_first: false
     avoid_classes_with_only_static_members: false
-    lowercase_with_underscores: true
-    ignore_for_file: true
     avoid_relative_lib_imports: true
     unnecessary_const: true
     avoid_void_async: true

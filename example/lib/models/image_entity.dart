@@ -63,6 +63,12 @@ class ImageEntity {
   )
   final bool isDeleted;
 
+  @SqlField(
+    fieldName: 'author_id',
+    fieldType: SqlFieldType.integer,
+  )
+  final int? authorId;
+
   ImageEntity({
     required this.id,
     required this.width,
@@ -72,5 +78,6 @@ class ImageEntity {
     this.fileSizeBytes,
     this.isFileUploaded = false,
     this.isDeleted = false,
+    this.authorId,
   });
 }

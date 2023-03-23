@@ -13,7 +13,7 @@ void main() {
 
   sqfliteFfiInit();
 
-  Future<SqliteEngine> _prepareSqliteEngine(
+  Future<SqliteEngine> prepareSqliteEngine(
     String databaseFilePath,
   ) async {
     engine = await initializeTestDbEngineEnvironment(
@@ -34,7 +34,7 @@ void main() {
         final databaseFilePath =
             join(databaseFileDirectory.path, 'test_data_db.db');
 
-        engine = await _prepareSqliteEngine(
+        engine = await prepareSqliteEngine(
           databaseFilePath,
         );
       });
